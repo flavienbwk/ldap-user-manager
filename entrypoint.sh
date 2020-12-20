@@ -56,7 +56,7 @@ else
             -x509 \
             -new \
             -nodes \
-            -subj "/C=GB/ST=GB/L=GB/O=CA/OU=CA/CN=Wheelybird" \
+            -subj "/C=GB/ST=GB/L=GB/O=CA/OU=CA/CN=flavienbwk" \
             -key $cakey \
             -sha256 \
             -days 7300 \

@@ -1,0 +1,41 @@
+version: "3.7"
+
+services:
+
+    interface:
+        build: .
+        image: wheelybird/ldap-user-manager:devel
+        ports:
+            - 8080:80
+            - 8433:433
+        environment: 
+            SERVER_HOSTNAME: ldap_server
+            LDAP_URI: ldap://ldap_server
+            LDAP_BASE_DN: dc=flavienbwk,dc=com
+            LDAP_ADMINS_GROUP: admins
+            LDAP_ADMIN_BIND_DN: "cn=admin,dc=flavienbwk,dc=com"
+            LDAP_ADMIN_BIND_PWD: changeme
+            USERNAME_FORMAT: "{first_name_initial}{last_name}"
+            NO_HTTPS: "TRUE"
+
+    # phpldapadmin:
+    #     image: osixia/phpldapadmin:latest
+    #     environment:
+    #         PHPLDAPADMIN_LDAP_HOSTS: "ldap_server"
+    #         PHPLDAPADMIN_HTTPS: "true"
+    #     ports:
+    #         - "8081:443"
+
+    ldap_server:
+        image: osixia/openldap:latest
+        ports:
+            - "389:389"
+        volumes:
+            - "/srv/docker/ldap-user-interface/ldap_var:/var/lib/ldap"
+            - "/srv/docker/ldap-user-interface/ldap_etc:/etc/ldap/slapd.d"
+        environment:
+            LDAP_ORGANISATION: "flavienbwk"
+            LDAP_DOMAIN: "flavienbwk.com"
+            LDAP_ADMIN_PASSWORD: changeme
+            LDAP_RFC2307BIS_SCHEMA: "true"
+            LDAP_TLS: "false"

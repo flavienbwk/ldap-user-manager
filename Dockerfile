@@ -15,8 +15,8 @@ EXPOSE 443
 COPY www/ /opt/ldap_user_manager
 RUN tar -xzf /tmp/v6.2.0.tar.gz -C /opt && mv /opt/PHPMailer-6.2.0 /opt/PHPMailer
 
-COPY entrypoint /usr/local/bin/entrypoint
-RUN chmod a+x /usr/local/bin/entrypoint
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod a+x /usr/local/bin/entrypoint.sh
 
 CMD ["apache2-foreground"]
-ENTRYPOINT ["/usr/local/bin/entrypoint"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
